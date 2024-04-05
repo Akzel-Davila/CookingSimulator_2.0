@@ -9,7 +9,6 @@ public class Player {
     private String imageFileName;
     private BufferedImage image;
     private Rectangle playerBox;
-    private boolean highlight;
     private int x_pos;
     private int y_pos;
 
@@ -17,7 +16,6 @@ public class Player {
         this.imageFileName = "images/player_"+playerNum + ".jpg";
         this.image = readImage();
         this.playerBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
-        this.highlight = false;
         this.x_pos = x;
         this.y_pos = y;
     }
