@@ -20,13 +20,17 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth(), p.getImage().getHeight());
+        g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
         g.drawImage(p.getImage(), p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-        System.out.println(p.getX_pos());
     }
 
     public void mousePressed(MouseEvent e) {
-        System.out.println("huuh");
+        Point clicked = e.getPoint();
+        if (e.getButton() == 1){
+            if (p.getPlayerBox().contains(clicked)){
+                System.out.println("ahhhh");
+            }
+        }
     }
 
     public void mouseReleased(MouseEvent e) { }
@@ -41,8 +45,16 @@ class DrawPanel extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W){
-            p.setX_pos(p.getX_pos()-10);
             p.setY_pos(p.getY_pos()-10);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_A){
+            p.setX_pos(p.getX_pos()-10);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D){
+            p.setX_pos(p.getX_pos()+10);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S){
+            p.setY_pos(p.getY_pos()+10);
         }
     }
 

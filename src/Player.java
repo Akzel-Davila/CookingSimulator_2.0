@@ -23,7 +23,7 @@ public class Player {
     }
 
     public Rectangle getPlayerBox() {
-        return getPlayerBox();
+        return playerBox;
     }
 
     public String getImageFileName() {
