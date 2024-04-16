@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.security.Key;
 import java.util.ArrayList;
 import java.awt.Font;
+import java.util.Arrays;
+
 class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotionListener {
     Player p;
     Ingredients ingredients;
@@ -22,16 +24,29 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         super.paintComponent(g);
         g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
         g.drawImage(p.getImage(), p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-        g.drawRect(50,50,100,100);
-        g.drawImage(ingredients.getImage(0), 50,50,null);
+        for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
+            g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
+            g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
+        }
     }
 
     public void mousePressed(MouseEvent e) {
         Point clicked = e.getPoint();
-        if (e.getButton() == 1){
-            if (p.getPlayerBox().contains(clicked)){
-                System.out.println("ahhhh");
+        int saved_index = 0;
+        boolean dragging = false;
+        int startX = clicked.x;
+        int startY = clicked.y;
+        for (int i = 0; i < ingredients.getIngredientBoxes().length; i++){
+            if (!dragging &&ingredients.getIngredientBoxes()[i].contains(clicked)){
+                dragging = true;
+                saved_index = i;
             }
+        }
+        if (dragging){
+            int endX = getMousePosition().x - startX;
+            int endY = getMousePosition().y - startY;
+            ingredients.updateIngredient(saved_index, endX*10, endY*10);
+            System.out.println(Arrays.toString(ingredients.getCordList()));
         }
     }
 
@@ -42,13 +57,24 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     @Override
     public void mouseDragged(MouseEvent e) {
         Point clicked = e.getPoint();
-        for (Rectangle hitBox: ingredients.getIngredientBoxes()){
-            if (hitBox.contains(clicked)){
-                g.drawRect(50,50,100,100);
-                g.drawImage(ingredients.getImage(0), 50,50,null);
+        int saved_index = 0;
+        boolean dragging = ingredients.isDragged();
+        int startX = clicked.x;
+        int startY = clicked.y;
+        for (int i = 0; i < ingredients.getIngredientBoxes().length; i++){
+            if (!dragging &&ingredients.getIngredientBoxes()[i].contains(clicked)){
+                dragging = true;
+                saved_index = i;
             }
         }
+        if (dragging){
+            int endX = getMousePosition().x - startX;
+            int endY = getMousePosition().y - startY;
+            ingredients.updateIngredient(saved_index, endX*10, endY*10);
+            System.out.println(Arrays.toString(ingredients.getCordList()));
+        }
     }
+
 
     @Override
     public void mouseMoved(MouseEvent e) {
