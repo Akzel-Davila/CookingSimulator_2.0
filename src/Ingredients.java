@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Ingredients {
     private String [] ingredientList;
@@ -32,14 +33,16 @@ public class Ingredients {
             imageFileNames[i] = "images/ingredient_" + ingredientList[i] + ".jpg";
             images[i] = readImage(i);
         }
-        for (int j = 0; j<cordList.length; j+=2){
+        for (int j = 0; j<ingredientList.length; j++){
             int counter = 0;
-            ingredientBoxes[counter] = new Rectangle(cordList[j], cordList[j+1], images[counter].getWidth(), images[counter].getHeight());
+            ingredientBoxes[j] = new Rectangle(cordList[counter], cordList[counter+1], images[j].getWidth(), images[j].getHeight());
         }
+        System.out.println(Arrays.toString(ingredientBoxes));
     }
     public void updateIngredient(int index, int x, int y){
-        cordList[index*2] = cordList[index*2] +x;
-        cordList[index*2+1] = cordList[index*2 +1] + y;
+        cordList[index*2] = x-150;
+        cordList[index*2+1] = y-150;
+        System.out.println(Arrays.toString(cordList));
         ingredientBoxes[index] = new Rectangle(cordList[index*2],cordList[index*2+1], images[index].getWidth(), images[index].getHeight());
     }
     public Rectangle[] getIngredientBoxes() {

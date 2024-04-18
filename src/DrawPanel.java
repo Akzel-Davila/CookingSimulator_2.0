@@ -7,17 +7,22 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.util.Arrays;
+import java.awt.MouseInfo;
+
+import static java.awt.MouseInfo.getPointerInfo;
 
 class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotionListener {
     Player p;
     Ingredients ingredients;
+    boolean dragging = false;
+    int savedIndex;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
         this.addMouseMotionListener(this);
         setFocusable(true);
         p = new Player(1, 50 ,10);
-        ingredients = new Ingredients("lettuce");
+        ingredients = new Ingredients("lettuce,tomato");
     }
 
     protected void paintComponent(Graphics g) {
@@ -28,51 +33,39 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
             g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
         }
+        Point p = getPointerInfo().getLocation();
+        if(dragging){
+            ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
+        }
+
+        // is picture being dragged?
+        // if it is, move the picture relative to the mouse movement
     }
 
     public void mousePressed(MouseEvent e) {
         Point clicked = e.getPoint();
-        int saved_index = 0;
-        boolean dragging = false;
-        int startX = clicked.x;
-        int startY = clicked.y;
-        for (int i = 0; i < ingredients.getIngredientBoxes().length; i++){
-            if (!dragging &&ingredients.getIngredientBoxes()[i].contains(clicked)){
-                dragging = true;
-                saved_index = i;
+        int button = e.getButton();
+        if(button == MouseEvent.BUTTON1) {
+            for (int i = 0; i < ingredients.getIngredientBoxes().length; i++) {
+                if (ingredients.getIngredientBoxes()[i].contains(clicked)) {
+                    dragging = true;
+                    savedIndex = i;
+                    System.out.println("True");
+                }
             }
         }
-        if (dragging){
-            int endX = getMousePosition().x - startX;
-            int endY = getMousePosition().y - startY;
-            ingredients.updateIngredient(saved_index, endX*10, endY*10);
-            System.out.println(Arrays.toString(ingredients.getCordList()));
-        }
+
     }
 
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+        if (dragging)
+            dragging = false;
+    }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
     public void mouseClicked(MouseEvent e) { }
     @Override
     public void mouseDragged(MouseEvent e) {
-        Point clicked = e.getPoint();
-        int saved_index = 0;
-        boolean dragging = ingredients.isDragged();
-        int startX = clicked.x;
-        int startY = clicked.y;
-        for (int i = 0; i < ingredients.getIngredientBoxes().length; i++){
-            if (!dragging &&ingredients.getIngredientBoxes()[i].contains(clicked)){
-                dragging = true;
-                saved_index = i;
-            }
-        }
-        if (dragging){
-            int endX = getMousePosition().x - startX;
-            int endY = getMousePosition().y - startY;
-            ingredients.updateIngredient(saved_index, endX*10, endY*10);
-            System.out.println(Arrays.toString(ingredients.getCordList()));
-        }
     }
 
 
