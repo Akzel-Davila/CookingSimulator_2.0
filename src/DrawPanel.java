@@ -16,6 +16,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     Ingredients ingredients;
     boolean dragging = false;
     int savedIndex;
+    boolean screen1 = true;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -27,15 +28,17 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
-        g.drawImage(p.getImage(), p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-        for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
-            g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
-            g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
-        }
-        Point p = getPointerInfo().getLocation();
-        if(dragging){
-            ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
+        if(screen1){
+            g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
+            g.drawImage(p.getImage(), p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
+            for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
+                g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
+                g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
+            }
+            Point p = getPointerInfo().getLocation();
+            if(dragging){
+                ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
+            }
         }
 
         // is picture being dragged?
