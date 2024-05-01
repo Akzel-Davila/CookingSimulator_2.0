@@ -1,9 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -13,21 +10,22 @@ public class Player {
     private BufferedImage image;
     private Rectangle playerBox;
     String [] pos;
-    private int x_pos;
-    private int y_pos;
+    private int xPos;
+    private int yPos;
 
     public Player(int playerNum, int x, int y) {
         this.imageFileName = "images/player_"+playerNum + ".jpg";
         this.image = readImage();
         this.playerBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
         pos = readSaves(new File("saves/save1"));
-        if(pos.length != 0){
-            this.x_pos = Integer.parseInt(pos[0]);
-            this.y_pos = Integer.parseInt(pos[1]);
+        System.out.println(Arrays.toString(pos));
+        if(pos.length > 0){
+            this.xPos = Integer.parseInt(pos[0]);
+            this.yPos = Integer.parseInt(pos[1]);
         }
         else{
-            this.x_pos = x;
-            this.y_pos = y;
+            this.xPos = x;
+            this.yPos = y;
         }
     }
 
@@ -56,20 +54,20 @@ public class Player {
         this.playerBox = playerBox;
     }
 
-    public int getX_pos() {
-        return x_pos;
+    public int getXPos() {
+        return xPos;
     }
 
-    public void setX_pos(int x_pos) {
-        this.x_pos = x_pos;
+    public void setXPos(int xPos) {
+        this.xPos = xPos;
     }
 
-    public int getY_pos() {
-        return y_pos;
+    public int getYPos() {
+        return yPos;
     }
 
-    public void setY_pos(int y_pos) {
-        this.y_pos = y_pos;
+    public void setYPos(int yPos) {
+        this.yPos = yPos;
     }
 
     public BufferedImage readImage() {
@@ -94,13 +92,41 @@ public class Player {
         }
         String fileData = "";
         while(s.hasNextLine()){
-            int colonNum = s.nextLine().indexOf(":") + 1;
-            String line = s.nextLine().substring(colonNum);
-            fileData += line + "\n";
+            String currentLine = s.nextLine();
+            int colonNum = currentLine.indexOf(":") + 1;
+            String line = currentLine.substring(colonNum);
+            fileData += line + ",";
         }
-        String[] fileArr = fileData.split("\n");
+        String[] fileArr = fileData.split(",");
+        System.out.println(fileData);
         System.out.println(Arrays.toString(fileArr));
         return fileArr;
+    }
+    public void updateFiles(File f){
+        String [] basicInfo = {"x:" + xPos, "y:" + yPos};
+        PrintWriter writer = null;
+        FileWriter edit = null;
+
+        try{
+            writer = new PrintWriter(f);
+        }
+        catch(FileNotFoundException e){
+            System.out.println("File not found");
+            System.exit(1);
+        }
+        writer.flush();
+        writer.close();
+        try{
+            edit = new FileWriter(f);
+            for(String data : basicInfo){
+                edit.write(data + "\n");
+            }
+            edit.close();
+        }
+        catch(IOException e){
+            System.out.println("Not working");
+            System.exit(1);
+        }
     }
 
 }

@@ -1,13 +1,8 @@
 import java.awt.event.*;
 import javax.swing.JPanel;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Point;
-import java.security.Key;
-import java.util.ArrayList;
-import java.awt.Font;
-import java.util.Arrays;
-import java.awt.MouseInfo;
+import java.io.File;
 
 import static java.awt.MouseInfo.getPointerInfo;
 
@@ -29,8 +24,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(screen1){
-            g.drawRect(p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
-            g.drawImage(p.getImage(), p.getX_pos(), p.getY_pos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
+            g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
+            g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
+            p.updateFiles((new File("saves/save1")));
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
                 g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
@@ -83,16 +79,16 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W){
-            p.setY_pos(p.getY_pos()-10);
+            p.setYPos(p.getYPos()-10);
         }
         if (e.getKeyCode() == KeyEvent.VK_A){
-            p.setX_pos(p.getX_pos()-10);
+            p.setXPos(p.getXPos()-10);
         }
         if (e.getKeyCode() == KeyEvent.VK_D){
-            p.setX_pos(p.getX_pos()+10);
+            p.setXPos(p.getXPos()+10);
         }
         if (e.getKeyCode() == KeyEvent.VK_S){
-            p.setY_pos(p.getY_pos()+10);
+            p.setYPos(p.getYPos()+10);
         }
     }
 
