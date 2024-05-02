@@ -1,7 +1,6 @@
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Point;
 import java.io.File;
 
 import static java.awt.MouseInfo.getPointerInfo;
@@ -12,6 +11,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     boolean dragging = false;
     int savedIndex;
     boolean screen1 = true;
+    Cooking c;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -19,6 +19,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         setFocusable(true);
         p = new Player(1, 50 ,10);
         ingredients = new Ingredients("lettuce,tomato");
+        c = new Cooking(ingredients);
     }
 
     protected void paintComponent(Graphics g) {
@@ -30,6 +31,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
                 g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
+            }
+            for(Rectangle rec: c.getFoodPlacement()){
+                g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
             }
             Point p = getPointerInfo().getLocation();
             if(dragging){

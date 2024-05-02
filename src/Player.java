@@ -19,7 +19,8 @@ public class Player {
         this.playerBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
         pos = readSaves(new File("saves/save1"));
         System.out.println(Arrays.toString(pos));
-        if(pos.length > 0){
+        System.out.println(pos.length);
+        if(pos.length > 1){
             this.xPos = Integer.parseInt(pos[0]);
             this.yPos = Integer.parseInt(pos[1]);
         }
