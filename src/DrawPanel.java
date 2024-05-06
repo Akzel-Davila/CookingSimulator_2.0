@@ -39,6 +39,8 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             if(dragging){
                 ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
             }
+            c.checkCollision();
+            c.updateCollision();
         }
 
         // is picture being dragged?

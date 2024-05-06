@@ -37,12 +37,10 @@ public class Ingredients {
             int counter = 0;
             ingredientBoxes[j] = new Rectangle(cordList[counter], cordList[counter+1], images[j].getWidth(), images[j].getHeight());
         }
-        System.out.println(Arrays.toString(ingredientBoxes));
     }
     public void updateIngredient(int index, int x, int y){
         cordList[index*2] = x-150;
         cordList[index*2+1] = y-150;
-        System.out.println(Arrays.toString(cordList));
         ingredientBoxes[index] = new Rectangle(cordList[index*2],cordList[index*2+1], images[index].getWidth(), images[index].getHeight());
     }
     public Rectangle[] getIngredientBoxes() {
