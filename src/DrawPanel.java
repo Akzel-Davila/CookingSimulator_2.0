@@ -37,7 +37,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             }
             Point p = getPointerInfo().getLocation();
             if(dragging){
+                c.placeIngredient();
                 ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
+                c.updateCollision();
             }
             c.checkCollision();
             c.updateCollision();
@@ -55,7 +57,6 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 if (ingredients.getIngredientBoxes()[i].contains(clicked)) {
                     dragging = true;
                     savedIndex = i;
-                    System.out.println("True");
                 }
             }
         }

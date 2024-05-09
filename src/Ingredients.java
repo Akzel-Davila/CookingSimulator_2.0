@@ -66,13 +66,15 @@ public class Ingredients {
         return images[i];
     }
 
-    public boolean isDragged() {
-        return dragged;
+    public int getIndex(String name){
+        for (int i = 0; i< ingredientList.length; i++){
+            if(ingredientList[i].equals(name)){
+                return i;
+            }
+        }
+        return -1;
     }
 
-    public void setDragged(boolean dragged) {
-        this.dragged = dragged;
-    }
 
     public BufferedImage readImage(int i) {
         try {

@@ -74,27 +74,43 @@ public class Cooking {
                 placedName[3] = food.getIngredientList()[i];
             }
         }
-        System.out.println(Arrays.toString(placedName));
-        System.out.println(Arrays.toString(placed));
     }
     public void updateCollision(){
         for (int i = 0; i<food.getIngredientBoxes().length; i++){
-            if(placed[0] && !foodPlacement[i].intersects(food.getIngredientBoxes()[i])){
+            if(placed[0] && !foodPlacement[0].intersects(food.getIngredientBoxes()[i])){
                 placed[0] = false;
                 placedName[0] = null;
             }
-            if(placed[1] && !foodPlacement[i].intersects(food.getIngredientBoxes()[i])){
+            if(placed[1] && !foodPlacement[1].intersects(food.getIngredientBoxes()[i])){
                 placed[1] = false;
                 placedName[1] = null;
             }
-            if(placed[2] && !foodPlacement[i].intersects(food.getIngredientBoxes()[i])){
+            if(placed[2] && !foodPlacement[2].intersects(food.getIngredientBoxes()[i])){
                 placed[2] = false;
                 placedName[2] = null;
             }
-            if(placed[3] && !foodPlacement[i].intersects(food.getIngredientBoxes()[i])){
+            if(placed[3] && !foodPlacement[3].intersects(food.getIngredientBoxes()[i])){
                 placed[3] = false;
                 placedName[3] = null;
             }
+        }
+    }
+    public void placeIngredient(){
+        if(placed[0]){
+            int index = food.getIndex(placedName[0]);
+            food.updateIngredient(index, (int)foodPlacement[0].getX(),(int) foodPlacement[0].getY());
+        }
+        if(placed[1]){
+            int index = food.getIndex(placedName[1]);
+            food.updateIngredient(index, (int)foodPlacement[1].getX(),(int) foodPlacement[1].getY());
+        }
+        if(placed[2]){
+            int index = food.getIndex(placedName[2]);
+            food.updateIngredient(index, (int)foodPlacement[2].getX(),(int) foodPlacement[2].getY());
+        }
+        if(placed[3]){
+            int index = food.getIndex(placedName[0]);
+            food.updateIngredient(index, (int)foodPlacement[3].getX(),(int) foodPlacement[3].getY());
         }
     }
 }
