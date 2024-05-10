@@ -14,7 +14,7 @@ public class Player {
     private int yPos;
 
     public Player(int playerNum, int x, int y) {
-        this.imageFileName = "images/player_"+playerNum + ".jpg";
+        this.imageFileName = "images/player_"+ playerNum + ".jpg";
         this.image = readImage();
         this.playerBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
         pos = readSaves(new File("saves/save1"));

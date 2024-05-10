@@ -78,20 +78,28 @@ public class Cooking {
     public void updateCollision(){
         for (int i = 0; i<food.getIngredientBoxes().length; i++){
             if(placed[0] && !foodPlacement[0].intersects(food.getIngredientBoxes()[i])){
-                placed[0] = false;
-                placedName[0] = null;
+                if(placedName[0].equals(food.getIngredientList()[i])) {
+                    placed[0] = false;
+                    placedName[0] = null;
+                }
             }
             if(placed[1] && !foodPlacement[1].intersects(food.getIngredientBoxes()[i])){
-                placed[1] = false;
-                placedName[1] = null;
+                if(placedName[1].equals(food.getIngredientList()[i])) {
+                    placed[1] = false;
+                    placedName[1] = null;
+                }
             }
             if(placed[2] && !foodPlacement[2].intersects(food.getIngredientBoxes()[i])){
-                placed[2] = false;
-                placedName[2] = null;
+                if(placedName[2].equals(food.getIngredientList()[i])) {
+                    placed[2] = false;
+                    placedName[2] = null;
+                }
             }
             if(placed[3] && !foodPlacement[3].intersects(food.getIngredientBoxes()[i])){
-                placed[3] = false;
-                placedName[3] = null;
+                if(placedName[3].equals(food.getIngredientList()[i])) {
+                    placed[3] = false;
+                    placedName[3] = null;
+                }
             }
         }
     }
@@ -109,8 +117,9 @@ public class Cooking {
             food.updateIngredient(index, (int)foodPlacement[2].getX(),(int) foodPlacement[2].getY());
         }
         if(placed[3]){
-            int index = food.getIndex(placedName[0]);
+            int index = food.getIndex(placedName[3]);
             food.updateIngredient(index, (int)foodPlacement[3].getX(),(int) foodPlacement[3].getY());
         }
     }
+
 }

@@ -36,13 +36,11 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
             }
             Point p = getPointerInfo().getLocation();
+            c.checkCollision();
             if(dragging){
-                c.placeIngredient();
                 ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
                 c.updateCollision();
             }
-            c.checkCollision();
-            c.updateCollision();
         }
 
         // is picture being dragged?
@@ -64,8 +62,10 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (dragging)
+        if (dragging) {
             dragging = false;
+            c.placeIngredient();
+        }
     }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
