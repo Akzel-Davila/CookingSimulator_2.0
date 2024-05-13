@@ -83,7 +83,7 @@ public class Ingredients {
             return image;
         }
         catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Not working");
             return null;
         }
     }

@@ -51,10 +51,6 @@ public class Cooking {
             menu.put(currMeal, ingredients);
         }
     }
-
-    public Rectangle[] getFoodPlacement() {
-        return foodPlacement;
-    }
     public void checkCollision(){
         for (int i = 0; i<food.getIngredientBoxes().length; i++){
             if(foodPlacement[0].intersects(food.getIngredientBoxes()[i])){
@@ -121,5 +117,7 @@ public class Cooking {
             food.updateIngredient(index, (int)foodPlacement[3].getX(),(int) foodPlacement[3].getY());
         }
     }
-
+    public Rectangle[] getFoodPlacement() {
+        return foodPlacement;
+    }
 }

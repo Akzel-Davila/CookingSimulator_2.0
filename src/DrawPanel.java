@@ -6,12 +6,13 @@ import java.io.File;
 import static java.awt.MouseInfo.getPointerInfo;
 
 class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotionListener {
-    Player p;
-    Ingredients ingredients;
-    boolean dragging = false;
-    int savedIndex;
-    boolean screen1 = true;
-    Cooking c;
+    private Player p;
+    private Ingredients ingredients;
+    private boolean dragging = false;
+    private int savedIndex;
+    private boolean screen1 = true;
+    private Cooking c;
+    private Button b;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -20,6 +21,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         p = new Player(1, 50 ,10);
         ingredients = new Ingredients("lettuce,tomato");
         c = new Cooking(ingredients);
+        b = new Button("kitchen");
     }
 
     protected void paintComponent(Graphics g) {
@@ -35,6 +37,8 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             for(Rectangle rec: c.getFoodPlacement()){
                 g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
             }
+            g.drawRect((int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(), (int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight());
+            g.drawImage(b.getButtonImage(),(int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(),null);
             Point p = getPointerInfo().getLocation();
             c.checkCollision();
             if(dragging){
