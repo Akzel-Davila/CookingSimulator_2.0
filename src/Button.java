@@ -11,15 +11,17 @@ public class Button {
     private boolean pressed;
     public Button(String screenName){
         pressed = false;
-        switch (screenName){
-            case "kitchen":
-                imageFileName = "kitchenButton.jpg";
-                buttonHit = new Rectangle(100,100,200,200);
-                break;
-            case "changingRoom":
-                imageFileName = "changingButton.jpg";
-                buttonHit = new Rectangle(100,100,400,400);
-                break;
+        switch (screenName) {
+            case "kitchen" -> {
+                imageFileName = "images/kitchenButton.jpg";
+                buttonHit = new Rectangle(100, 100, 150, 113);
+                System.out.println("1");
+            }
+            case "changingRoom" -> {
+                imageFileName = "images/changingButton.jpg";
+                buttonHit = new Rectangle(300, 100, 400, 400);
+                System.out.println("2");
+            }
         }
         buttonImage = readImage();
     }
@@ -30,7 +32,7 @@ public class Button {
             return image;
         }
         catch (IOException e) {
-            System.out.println("Not working");
+            System.out.println(e);
             return null;
         }
     }

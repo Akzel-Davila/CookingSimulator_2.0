@@ -1,23 +1,21 @@
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Scanner;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
 
 public class Cooking {
-    Rectangle[] foodPlacement;
-    Ingredients food;
-    String [] placedName;
-    boolean [] placed;
-    ArrayList<String> orders;
-    Hashtable<String, String[]> menu;
+    private Rectangle[] foodPlacement;
+    private Ingredients food;
+    private String [] placedName;
+    private boolean [] placed;
+    private ArrayList<String> orders;
+    private HashMap<String[], String> menu;
+    private BufferedImage currMealImage ;
+    private Rectangle currMealRec;
+
     public Cooking(Ingredients food)  {
         this.food = food;
-        menu = new Hashtable<>();
+        menu = new HashMap<>();
         orders = new ArrayList<>();
         makeMenu(new File("meal/meals"));
         foodPlacement = new Rectangle[4];
@@ -48,7 +46,7 @@ public class Cooking {
             orders.add(currMeal);
             fileData += currentLine.substring(colonNum+1);
             ingredients = fileData.split(",");
-            menu.put(currMeal, ingredients);
+            menu.put(ingredients,currMeal);
         }
     }
     public void checkCollision(){
@@ -102,22 +100,31 @@ public class Cooking {
     public void placeIngredient(){
         if(placed[0]){
             int index = food.getIndex(placedName[0]);
-            food.updateIngredient(index, (int)foodPlacement[0].getX(),(int) foodPlacement[0].getY());
+            food.updateIngredient(index, (int)foodPlacement[0].getX()+150,(int) foodPlacement[0].getY()+150);
         }
         if(placed[1]){
             int index = food.getIndex(placedName[1]);
-            food.updateIngredient(index, (int)foodPlacement[1].getX(),(int) foodPlacement[1].getY());
+            food.updateIngredient(index, (int)foodPlacement[1].getX() +150,(int) foodPlacement[1].getY()+150);
         }
         if(placed[2]){
             int index = food.getIndex(placedName[2]);
-            food.updateIngredient(index, (int)foodPlacement[2].getX(),(int) foodPlacement[2].getY());
+            food.updateIngredient(index, (int)foodPlacement[2].getX()+150,(int) foodPlacement[2].getY()+150);
         }
         if(placed[3]){
             int index = food.getIndex(placedName[3]);
-            food.updateIngredient(index, (int)foodPlacement[3].getX(),(int) foodPlacement[3].getY());
+            food.updateIngredient(index, (int)foodPlacement[3].getX()+150,(int) foodPlacement[3].getY()+150);
         }
+    }
+    public String combineIngredient(){
+        System.out.println(menu.keySet());
+        System.out.println(placedName);
+        return menu.getOrDefault(placedName, " ");
     }
     public Rectangle[] getFoodPlacement() {
         return foodPlacement;
+    }
+
+    public String[] getPlacedName() {
+        return placedName;
     }
 }

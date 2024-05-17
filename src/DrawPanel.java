@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
 import java.io.File;
+import java.util.Arrays;
 
 import static java.awt.MouseInfo.getPointerInfo;
 
@@ -19,7 +20,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         this.addMouseMotionListener(this);
         setFocusable(true);
         p = new Player(1, 50 ,10);
-        ingredients = new Ingredients("lettuce,tomato");
+        ingredients = new Ingredients("lettuce,tomato,cheese,bread");
         c = new Cooking(ingredients);
         b = new Button("kitchen");
     }
@@ -73,7 +74,15 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+        Point clicked = e.getPoint();
+        int button = e.getButton();
+        if(b.getButtonHit().contains(clicked) && button==MouseEvent.BUTTON1){
+            if(c.combineIngredient().equals(" ")){
+                System.out.println("Working");
+            }
+        }
+    }
     @Override
     public void mouseDragged(MouseEvent e) {
     }
