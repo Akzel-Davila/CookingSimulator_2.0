@@ -1,2 +1,2 @@
-hamburger:lettuce,tomato,cheese,bread
-pizza:tomato,lettuce
+hamburger:[lettuce, tomato, cheese, bread]
+pizza:[tomato, lettuce, cheese, bread]

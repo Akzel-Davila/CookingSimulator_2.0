@@ -9,11 +9,12 @@ import static java.awt.MouseInfo.getPointerInfo;
 class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotionListener {
     private Player p;
     private Ingredients ingredients;
-    private boolean dragging = false;
+    private boolean dragging;
     private int savedIndex;
-    private boolean screen1 = true;
+    private boolean screen1;
     private Cooking c;
     private Button b;
+    private boolean mealDrawn;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -23,6 +24,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         ingredients = new Ingredients("lettuce,tomato,cheese,bread");
         c = new Cooking(ingredients);
         b = new Button("kitchen");
+        mealDrawn = false;
+        dragging = false;
+        screen1 = true;
     }
 
     protected void paintComponent(Graphics g) {
@@ -45,6 +49,10 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             if(dragging){
                 ingredients.updateIngredient(savedIndex,(int)p.getX(), (int) p.getY());
                 c.updateCollision();
+            }
+            if(mealDrawn){
+                g.drawRect((int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), (int) c.getCurrMealRec().getWidth(), (int) c.getCurrMealRec().getHeight());
+                g.drawImage(c.getCurrMealImage(), (int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), null);
             }
         }
 
@@ -78,8 +86,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         Point clicked = e.getPoint();
         int button = e.getButton();
         if(b.getButtonHit().contains(clicked) && button==MouseEvent.BUTTON1){
-            if(c.combineIngredient().equals(" ")){
-                System.out.println("Working");
+            if(!c.combineIngredient().equals(" ")){
+                mealDrawn = true;
+                c.setNewMeal(c.combineIngredient());
             }
         }
     }

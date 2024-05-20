@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -8,15 +9,13 @@ public class Cooking {
     private Ingredients food;
     private String [] placedName;
     private boolean [] placed;
-    private ArrayList<String> orders;
-    private HashMap<String[], String> menu;
+    private HashMap<String, String> menu;
     private BufferedImage currMealImage ;
     private Rectangle currMealRec;
 
     public Cooking(Ingredients food)  {
         this.food = food;
         menu = new HashMap<>();
-        orders = new ArrayList<>();
         makeMenu(new File("meal/meals"));
         foodPlacement = new Rectangle[4];
         placed = new boolean[4];
@@ -37,16 +36,14 @@ public class Cooking {
             System.exit(1);
         }
         String currMeal;
-        String [] ingredients;
         while(s.hasNextLine()){
             String fileData = "";
             String currentLine = s.nextLine();
             int colonNum = currentLine.indexOf(":");
             currMeal = currentLine.substring(0,colonNum);
-            orders.add(currMeal);
             fileData += currentLine.substring(colonNum+1);
-            ingredients = fileData.split(",");
-            menu.put(ingredients,currMeal);
+            System.out.println(fileData);
+            menu.put(fileData,currMeal);
         }
     }
     public void checkCollision(){
@@ -116,9 +113,33 @@ public class Cooking {
         }
     }
     public String combineIngredient(){
-        System.out.println(menu.keySet());
-        System.out.println(placedName);
-        return menu.getOrDefault(placedName, " ");
+        String tempPlaced = Arrays.toString(placedName);
+        System.out.println(tempPlaced);
+        System.out.println(menu.get(tempPlaced));
+        return menu.getOrDefault(tempPlaced, " ");
+    }
+    public void setNewMeal(String mealName){
+        currMealRec = new Rectangle(500,600, 100,100);
+        currMealImage = readImage("images/" + mealName + ".jpg");
+    }
+
+    public BufferedImage getCurrMealImage() {
+        return currMealImage;
+    }
+    public Rectangle getCurrMealRec() {
+        return currMealRec;
+    }
+
+    public BufferedImage readImage(String imageFileName) {
+        try {
+            BufferedImage image;
+            image = ImageIO.read(new File(imageFileName));
+            return image;
+        }
+        catch (IOException e) {
+            System.out.println("Not working");
+            return null;
+        }
     }
     public Rectangle[] getFoodPlacement() {
         return foodPlacement;
@@ -127,4 +148,11 @@ public class Cooking {
     public String[] getPlacedName() {
         return placedName;
     }
+    public void setCurrMealImage(BufferedImage currMealImage) {
+        this.currMealImage = currMealImage;
+    }
+    public void setCurrMealRec(Rectangle currMealRec) {
+        this.currMealRec = currMealRec;
+    }
+
 }
