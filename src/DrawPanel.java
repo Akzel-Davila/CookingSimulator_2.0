@@ -14,7 +14,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     private boolean screen1;
     private Cooking c;
     private Button b;
+    private Order o;
     private boolean mealDrawn;
+    private boolean submitted;
     public DrawPanel() {
         this.addMouseListener(this);
         this.addKeyListener(this);
@@ -24,9 +26,11 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         ingredients = new Ingredients("lettuce,tomato,cheese,bread");
         c = new Cooking(ingredients);
         b = new Button("kitchen");
+        o = new Order();
         mealDrawn = false;
         dragging = false;
         screen1 = true;
+        submitted = false;
     }
 
     protected void paintComponent(Graphics g) {
@@ -35,6 +39,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
             g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
             p.updateFiles((new File("saves/save1")));
+            //Draw receipt and current order
+            g.drawRect((int)o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),(int)o.getReceiptBox().getWidth(),(int)o.getReceiptBox().getHeight());
+            g.drawImage(o.getReceiptImage(),(int) o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),null);
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
                 g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
