@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static java.awt.MouseInfo.getPointerInfo;
@@ -39,13 +40,26 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
             g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
             p.updateFiles((new File("saves/save1")));
+
+
             //Draw receipt and current order
             g.drawRect((int)o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),(int)o.getReceiptBox().getWidth(),(int)o.getReceiptBox().getHeight());
             g.drawImage(o.getReceiptImage(),(int) o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),null);
+            g.setFont(new Font("Comic Sans", Font.BOLD, 20));
+            ArrayList<String> text = o.getOrderText();
+            int add = 625;
+            for (String s : text) {
+                g.drawString(s, 550, add);
+                add+=30;
+            }
+
+            //draw the ingredients
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
                 g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
             }
+
+            //draw the boxes where ingredients are placed
             for(Rectangle rec: c.getFoodPlacement()){
                 g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
             }

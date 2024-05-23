@@ -52,15 +52,17 @@ public class Order {
     public boolean checkOrder(String userMeal){
         return userMeal.equals(currIngredientOrder);
     }
-    public String getOrderText(){
-        String text = "Current Order:" + currMealOrder + "\n";
+    public ArrayList<String> getOrderText(){
+        ArrayList <String> text = new ArrayList<>();
+        text.add("Current Order: " + currMealOrder);
         String temp = currIngredientOrder;
-        for (int i = 0; i< currIngredientOrder.length(); i++){
-            int commaNum = currIngredientOrder.indexOf(",");
+        while(temp.contains(",")){
+            int commaNum = temp.indexOf(",");
             String ingredientName = temp.substring(1,commaNum);
-            temp = temp.substring(commaNum);
-            text = text + "\n" + ingredientName;
+            text.add(ingredientName);
+            temp = temp.substring(commaNum+1);
         }
+        text.add(temp.substring(1,temp.indexOf("]")));
         return text;
     }
     public BufferedImage readImage() {

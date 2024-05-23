@@ -15,12 +15,10 @@ public class Button {
             case "kitchen" -> {
                 imageFileName = "images/kitchenButton.jpg";
                 buttonHit = new Rectangle(100, 100, 150, 113);
-                System.out.println("1");
             }
             case "changingRoom" -> {
                 imageFileName = "images/changingButton.jpg";
                 buttonHit = new Rectangle(300, 100, 400, 400);
-                System.out.println("2");
             }
         }
         buttonImage = readImage();
