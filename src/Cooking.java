@@ -12,6 +12,8 @@ public class Cooking {
     private HashMap<String, String> menu;
     private BufferedImage currMealImage ;
     private Rectangle currMealRec;
+    private String currUserMeal;
+    private BufferedImage placeFrame;
 
     public Cooking(Ingredients food)  {
         this.food = food;
@@ -25,6 +27,7 @@ public class Cooking {
             foodPlacement[i] = new Rectangle(400 ,100 + add ,100 ,100);
             add +=150;
         }
+        placeFrame = readImage("images/itemFrame.jpg");
     }
     public void makeMenu(File f){
         Scanner s = null;
@@ -113,10 +116,10 @@ public class Cooking {
         }
     }
     public String combineIngredient(){
-        String tempPlaced = Arrays.toString(placedName);
-        System.out.println(tempPlaced);
-        System.out.println(menu.get(tempPlaced));
-        return menu.getOrDefault(tempPlaced, " ");
+        currUserMeal = Arrays.toString(placedName);
+        System.out.println(currUserMeal);
+        System.out.println(menu.get(currUserMeal));
+        return menu.getOrDefault(currUserMeal, " ");
     }
     public void setNewMeal(String mealName){
         currMealRec = new Rectangle(500,600, 100,100);
@@ -141,6 +144,15 @@ public class Cooking {
             return null;
         }
     }
+
+    public String getCurrUserMeal() {
+        return currUserMeal;
+    }
+
+    public void setCurrUserMeal(String currUserMeal) {
+        this.currUserMeal = currUserMeal;
+    }
+
     public Rectangle[] getFoodPlacement() {
         return foodPlacement;
     }
@@ -155,4 +167,11 @@ public class Cooking {
         this.currMealRec = currMealRec;
     }
 
+    public BufferedImage getPlaceFrame() {
+        return placeFrame;
+    }
+
+    public void setPlaceFrame(BufferedImage placeFrame) {
+        this.placeFrame = placeFrame;
+    }
 }

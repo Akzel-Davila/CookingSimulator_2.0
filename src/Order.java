@@ -16,14 +16,16 @@ public class Order {
     private Rectangle receiptBox;
     private BufferedImage receiptImage;
     private String imageFileName;
+    private int points;
     public Order() {
         menu = new HashMap<>();
         orders = new ArrayList<>();
         makeMenu(new File("meal/meals"));
         generateOrder();
-        imageFileName = "images/receipt.jpg";
+        imageFileName = "images/receipt.png";
         receiptImage = readImage();
-        receiptBox = new Rectangle(500,500,300,230);
+        receiptBox = new Rectangle(1100,80,300,230);
+        points = 0;
     }
     public void makeMenu(File f) {
         Scanner s = null;
@@ -50,6 +52,9 @@ public class Order {
         currIngredientOrder = menu.get(currMealOrder);
     }
     public boolean checkOrder(String userMeal){
+        if (userMeal.equals(currIngredientOrder)){
+            points++;
+        }
         return userMeal.equals(currIngredientOrder);
     }
     public ArrayList<String> getOrderText(){
