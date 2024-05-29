@@ -15,7 +15,7 @@ public class Cooking {
     private String currUserMeal;
     private BufferedImage placeFrame;
 
-    public Cooking(Ingredients food)  {
+    public Cooking(Ingredients food){
         this.food = food;
         menu = new HashMap<>();
         makeMenu(new File("meal/meals"));
@@ -24,7 +24,7 @@ public class Cooking {
         placedName = new String[4];
         int add = 0;
         for (int i = 0; i< foodPlacement.length; i++){
-            foodPlacement[i] = new Rectangle(400 ,100 + add ,100 ,100);
+            foodPlacement[i] = new Rectangle(800 ,300 + add ,100 ,100);
             add +=150;
         }
         placeFrame = readImage("images/itemFrame.jpg");

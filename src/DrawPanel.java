@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static java.awt.MouseInfo.getPointerInfo;
 
@@ -24,32 +25,30 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         this.addMouseMotionListener(this);
         setFocusable(true);
         p = new Player(1, 50 ,10);
-        ingredients = new Ingredients("lettuce,tomato,cheese,bread");
+        ingredients = new Ingredients("lettuce,tomato,cheese,bread,rice,meat");
         c = new Cooking(ingredients);
         b = new Button("kitchen");
         o = new Order();
-        s = new Screen(false);
+        kitchen = true;
+        s = new Screen(kitchen);
         mealDrawn = false;
         dragging = false;
-        kitchen = false;
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(kitchen){
             g.drawImage(s.getScreenImage(),0,0,null );
-            g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
-            g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-            p.updateFiles((new File("saves/save1")));
+            g.drawImage(s.getPlateImage(), 1100,600,null);
 
             //Draw receipt and current order
             g.drawRect((int)o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),(int)o.getReceiptBox().getWidth()-150,(int)o.getReceiptBox().getHeight()-150);
             g.drawImage(o.getReceiptImage(),(int) o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),null);
-            g.setFont(new Font("Comic Sans", Font.ITALIC, 18));
+            g.setFont(new Font("Comic Sans", Font.ITALIC, 22));
             ArrayList<String> text = o.getOrderText();
-            int add = 200;
+            int add = 290;
             for (String s : text) {
-                g.drawString(s, 1150, add);
+                g.drawString(s, 1575, add);
                 add+=20;
             }
 
@@ -66,10 +65,10 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
             }
             g.drawRect((int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(), (int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight());
-            g.drawImage(b.getButtonImage(),(int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(),null);
-            Point p = getPointerInfo().getLocation();
+            g.drawImage(b.getButtonImage(),(int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(),(int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight(),null);
             c.checkCollision();
             if(dragging){
+                Point p = getPointerInfo().getLocation();
                 ingredients.updateIngredient(savedIndex,(int)p.getX()+90, (int) p.getY()+90);
                 c.updateCollision();
             }
@@ -77,8 +76,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 g.drawRect((int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), (int) c.getCurrMealRec().getWidth(), (int) c.getCurrMealRec().getHeight());
                 g.drawImage(c.getCurrMealImage(), (int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), null);
                 if(o.checkOrder(c.getCurrUserMeal())){
-                    //put check mark or smth to indicate a good job
+                    o.checkOrder(c.getCurrUserMeal());
                     c.setCurrUserMeal("");
+                    o.generateOrder();
                 }
             }
         }

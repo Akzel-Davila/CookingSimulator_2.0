@@ -24,7 +24,7 @@ public class Order {
         generateOrder();
         imageFileName = "images/receipt.png";
         receiptImage = readImage();
-        receiptBox = new Rectangle(1100,80,300,230);
+        receiptBox = new Rectangle(1500,120,300,230);
         points = 0;
     }
     public void makeMenu(File f) {

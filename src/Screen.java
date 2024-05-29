@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class Screen {
     private BufferedImage screenImage;
+    private BufferedImage plateImage;
     private String imageFileName;
     public Screen(boolean room){
         if(room) {
@@ -14,6 +15,8 @@ public class Screen {
             imageFileName = "images/dining_room.jpg";
         }
         screenImage = readImage();
+        imageFileName = "images/plate.png";
+        plateImage = readImage();
     }
     public BufferedImage readImage() {
         try {
@@ -29,5 +32,9 @@ public class Screen {
 
     public BufferedImage getScreenImage() {
         return screenImage;
+    }
+
+    public BufferedImage getPlateImage() {
+        return plateImage;
     }
 }

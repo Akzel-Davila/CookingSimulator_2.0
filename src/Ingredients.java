@@ -16,8 +16,8 @@ public class Ingredients {
     private Rectangle[] ingredientBoxes;
     public Ingredients(String ingredientNames){
         dragged = false;
-        int startX = 0;
-        int startY = 0;
+        int startX = 500;
+        int startY = 200;
         ingredientList = ingredientNames.split(",");
         cordList = new int[ingredientList.length * 2];
         images = new BufferedImage[ingredientList.length];
@@ -26,16 +26,21 @@ public class Ingredients {
         for (int h = 0; h < cordList.length; h+=2){
             cordList[h] = startX;
             cordList[h+1] = startY;
-            startX += 10;
-            startY += 10;
+            startY+=150;
+            if (h>8){
+                startX = 1200;
+            }
+
         }
+        System.out.println(Arrays.toString(cordList));
         for (int i = 0; i<ingredientList.length; i++){
             imageFileNames[i] = "images/ingredient_" + ingredientList[i] + ".jpg";
             images[i] = readImage(i);
         }
+        int counter = 0;
         for (int j = 0; j<ingredientList.length; j++){
-            int counter = 0;
             ingredientBoxes[j] = new Rectangle(cordList[counter], cordList[counter+1], images[j].getWidth(), images[j].getHeight());
+            counter+=2;
         }
     }
     public void updateIngredient(int index, int x, int y){
