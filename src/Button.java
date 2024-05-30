@@ -14,7 +14,7 @@ public class Button {
         switch (screenName) {
             case "kitchen" -> {
                 imageFileName = "images/kitchenButton.jpg";
-                buttonHit = new Rectangle(100, 100, 150, 113);
+                buttonHit = new Rectangle(1100, 800, 150, 150);
             }
             case "changingRoom" -> {
                 imageFileName = "images/changingButton.jpg";

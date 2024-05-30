@@ -10,6 +10,7 @@ public class Ingredients {
     private String [] imageFileNames;
     private BufferedImage [] images;
     private int[] cordList;
+    private int[] permanentCordList;
     private BufferedImage draggedImage;
     private String draggedImageFileName;
     private boolean dragged;
@@ -20,19 +21,22 @@ public class Ingredients {
         int startY = 200;
         ingredientList = ingredientNames.split(",");
         cordList = new int[ingredientList.length * 2];
+        permanentCordList = new int[ingredientList.length *2];
         images = new BufferedImage[ingredientList.length];
         imageFileNames = new String[ingredientList.length];
         ingredientBoxes = new Rectangle[ingredientList.length];
         for (int h = 0; h < cordList.length; h+=2){
             cordList[h] = startX;
             cordList[h+1] = startY;
+            permanentCordList[h] = startX;
+            permanentCordList[h+1] = startY;
             startY+=150;
-            if (h>8){
+            if (h>4){
                 startX = 1200;
+                startY = 200;
             }
 
         }
-        System.out.println(Arrays.toString(cordList));
         for (int i = 0; i<ingredientList.length; i++){
             imageFileNames[i] = "images/ingredient_" + ingredientList[i] + ".jpg";
             images[i] = readImage(i);
@@ -54,6 +58,9 @@ public class Ingredients {
 
     public int[] getCordList() {
         return cordList;
+    }
+    public int[] getPermanentCordList(){
+        return permanentCordList;
     }
 
     public void setCordList(int[] cordList) {

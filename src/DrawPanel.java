@@ -30,7 +30,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         b = new Button("kitchen");
         o = new Order();
         kitchen = true;
-        s = new Screen(kitchen);
+        s = new Screen(true);
         mealDrawn = false;
         dragging = false;
     }
@@ -44,7 +44,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
             //Draw receipt and current order
             g.drawRect((int)o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),(int)o.getReceiptBox().getWidth()-150,(int)o.getReceiptBox().getHeight()-150);
             g.drawImage(o.getReceiptImage(),(int) o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),null);
-            g.setFont(new Font("Comic Sans", Font.ITALIC, 22));
+            g.setFont(new Font("Comic Sans", Font.BOLD, 22));
             ArrayList<String> text = o.getOrderText();
             int add = 290;
             for (String s : text) {
@@ -61,8 +61,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
 
             //draw the ingredients
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
-                g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth(), ingredients.getImage(i).getHeight());
+                g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth()-100, ingredients.getImage(i).getHeight()-100);
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
+                g.drawImage(ingredients.getImage(i), ingredients.getPermanentCordList()[i*2], ingredients.getPermanentCordList()[i*2+1], null);
             }
             g.drawRect((int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(), (int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight());
             g.drawImage(b.getButtonImage(),(int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(),(int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight(),null);
@@ -81,12 +82,17 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                     o.generateOrder();
                 }
             }
+            g.drawRect((int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(), (int) s.getKnobBox().getWidth(),(int) s.getKnobBox().getHeight());
+            g.drawImage(s.getDoorknobImage(),(int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(),null);
         }
+
+
+
         if(!kitchen){
             g.drawImage(s.getScreenImage(),0,0,null );
+            p.updateFiles((new File("saves/save1")));
             g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
             g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-            p.updateFiles((new File("saves/save1")));
         }
 
         // is picture being dragged?
@@ -103,7 +109,13 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                     savedIndex = i;
                 }
             }
+            if(s.getKnobBox().contains(clicked)){
+                System.out.println("working");
+                s.changeImage(!kitchen);
+                kitchen = false;
+            }
         }
+        System.out.println(kitchen);
 
     }
 
