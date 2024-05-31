@@ -31,7 +31,7 @@ public class Ingredients {
             permanentCordList[h] = startX;
             permanentCordList[h+1] = startY;
             startY+=150;
-            if (h>4){
+            if (h==6){
                 startX = 1200;
                 startY = 200;
             }
