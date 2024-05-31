@@ -97,5 +97,13 @@ public class Order {
     public void setReceiptImage(BufferedImage receiptImage) {
         this.receiptImage = receiptImage;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }
 

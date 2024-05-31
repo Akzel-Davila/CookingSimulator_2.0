@@ -43,7 +43,7 @@ public class Ingredients {
         }
         int counter = 0;
         for (int j = 0; j<ingredientList.length; j++){
-            ingredientBoxes[j] = new Rectangle(cordList[counter], cordList[counter+1], images[j].getWidth(), images[j].getHeight());
+            ingredientBoxes[j] = new Rectangle(cordList[counter], cordList[counter+1], 100, 100);
             counter+=2;
         }
     }
