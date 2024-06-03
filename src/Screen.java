@@ -22,7 +22,7 @@ public class Screen {
         plateImage = readImage();
         imageFileName = "images/doorknob.png";
         doorknobImage = readImage();
-        knobBox = new Rectangle(-100,-100,doorknobImage.getWidth()-100,doorknobImage.getHeight()-100);
+        knobBox = new Rectangle(50,700,doorknobImage.getWidth()-100,doorknobImage.getHeight()-100);
     }
     public BufferedImage readImage() {
         try {

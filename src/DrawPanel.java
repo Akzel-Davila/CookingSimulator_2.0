@@ -17,7 +17,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
     private Button b;
     private Order o;
     private Screen s;
+    private Customer customer;
     private boolean mealDrawn;
+    private boolean drawCustomerAgain;
 
     public DrawPanel() {
         this.addMouseListener(this);
@@ -29,10 +31,13 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         c = new Cooking(ingredients);
         b = new Button("kitchen");
         o = new Order();
+        customer = new Customer(o,"Freddy");
         kitchen = true;
         s = new Screen(true);
         mealDrawn = false;
         dragging = false;
+        drawCustomerAgain = true;
+
     }
 
     protected void paintComponent(Graphics g) {
@@ -66,8 +71,12 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
                 g.drawImage(ingredients.getImage(i), ingredients.getPermanentCordList()[i*2], ingredients.getPermanentCordList()[i*2+1], null);
             }
+
+            //draw button to switch to dining room
             g.drawRect((int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(), (int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight());
             g.drawImage(b.getButtonImage(),(int)b.getButtonHit().getX(), (int) b.getButtonHit().getY(),(int) b.getButtonHit().getWidth(), (int)b.getButtonHit().getHeight(),null);
+
+            //Ingredients are checked for dragging and collision with frames
             c.checkCollision();
             if(dragging){
                 Point p = getPointerInfo().getLocation();
@@ -83,17 +92,22 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                     o.generateOrder();
                 }
             }
-            g.drawRect((int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(), (int) s.getKnobBox().getWidth(),(int) s.getKnobBox().getHeight());
+            g.drawRect((int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(), (int) s.getKnobBox().getWidth()-10,(int) s.getKnobBox().getHeight()-10);
             g.drawImage(s.getDoorknobImage(),(int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(),null);
+            drawCustomerAgain = true;
         }
 
 
 
         if(!kitchen){
-            g.drawImage(s.getScreenImage(),0,0,null );
+            g.drawImage(s.getScreenImage(),0,0,null);
             p.updateFiles((new File("saves/save1")));
             g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
             g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
+            if(customer.checkDraw() && customer.getCustomerCount() < 8 && drawCustomerAgain){
+                customer.addCustomerCount();
+            }
+            drawCustomerAgain = false;
         }
 
         // is picture being dragged?
