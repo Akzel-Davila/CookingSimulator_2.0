@@ -62,7 +62,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
 
             //draw the ingredients
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
-                g.drawRect(ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], ingredients.getImage(i).getWidth()-100, ingredients.getImage(i).getHeight()-100);
+                g.drawRect(ingredients.getCordList()[i*2]+50, ingredients.getCordList()[i*2+1]+30, 0, 0);
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
                 g.drawImage(ingredients.getImage(i), ingredients.getPermanentCordList()[i*2], ingredients.getPermanentCordList()[i*2+1], null);
             }
