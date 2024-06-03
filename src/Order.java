@@ -68,6 +68,7 @@ public class Order {
             temp = temp.substring(commaNum+1);
         }
         text.add(temp.substring(1,temp.indexOf("]")));
+        System.out.println(text);
         return text;
     }
     public BufferedImage readImage() {
