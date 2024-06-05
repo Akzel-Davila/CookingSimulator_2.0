@@ -67,10 +67,10 @@ public class Customer {
     }
 
     public int getRandomX(){
-        return 400+(int)(Math.random()*300);
+        return 100+(int)(Math.random()*1200);
     }
     public int getRandomY(){
-        return 400+(int)(Math.random()*300);
+        return 200+(int)(Math.random()*900);
     }
     public BufferedImage readImage(int i) {
         try {

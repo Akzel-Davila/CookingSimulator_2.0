@@ -27,7 +27,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         this.addMouseMotionListener(this);
         setFocusable(true);
         p = new Player(1, 50 ,10);
-        ingredients = new Ingredients("lettuce,tomato,cheese,bread,rice,meat");
+        ingredients = new Ingredients("lettuce,tomato,cheese,bread,flour,meat,fish,seaweed");
         c = new Cooking(ingredients);
         b = new Button("kitchen");
         o = new Order();

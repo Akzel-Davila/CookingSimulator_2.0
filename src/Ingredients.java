@@ -11,12 +11,8 @@ public class Ingredients {
     private BufferedImage [] images;
     private int[] cordList;
     private int[] permanentCordList;
-    private BufferedImage draggedImage;
-    private String draggedImageFileName;
-    private boolean dragged;
     private Rectangle[] ingredientBoxes;
     public Ingredients(String ingredientNames){
-        dragged = false;
         int startX = 500;
         int startY = 200;
         ingredientList = ingredientNames.split(",");
