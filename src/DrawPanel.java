@@ -31,7 +31,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         c = new Cooking(ingredients);
         b = new Button("kitchen");
         o = new Order();
-        customer = new Customer(o,"freddy,lebron,palmer,jonesy,papa,spiderman");
+        customer = new Customer(o,"freddy,lebron,palmer,jonesy,papa,spiderman,christian");
         kitchen = true;
         s = new Screen(true);
         mealDrawn = false;

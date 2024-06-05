@@ -17,9 +17,11 @@ public class Order {
     private BufferedImage receiptImage;
     private String imageFileName;
     private int points;
+    private ArrayList <String> orderHistory;
     public Order() {
         menu = new HashMap<>();
         orders = new ArrayList<>();
+        orderHistory = new ArrayList<>();
         makeMenu(new File("meal/meals"));
         generateOrder();
         imageFileName = "images/receipt.png";
@@ -49,6 +51,7 @@ public class Order {
     public void generateOrder(){
         int num = (int) (Math.random() * orders.size());
         currMealOrder = orders.get(num);
+        orderHistory.add(currMealOrder);
         currIngredientOrder = menu.get(currMealOrder);
     }
     public boolean checkOrder(String userMeal){
@@ -104,6 +107,22 @@ public class Order {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public ArrayList<String> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(ArrayList<String> orders) {
+        this.orders = orders;
+    }
+
+    public ArrayList<String> getOrderHistory() {
+        return orderHistory;
+    }
+
+    public void setOrderHistory(ArrayList<String> orderHistory) {
+        this.orderHistory = orderHistory;
     }
 }
 

@@ -47,6 +47,15 @@ public class Customer {
         }
         return false;
     }
+    public String getText(){
+        String text = "This ";
+        String [] outcomes = {"STINKS", "Is Horrible", "Is Great", "RUlES", "Is mid", "Sucks", "Is okay", "Smells", "Is Raw", "Is Perfect"};
+        int randNum = (int)(Math.random() * o.getOrderHistory().size());
+        int randStrNum = (int) (Math.random() * outcomes.length);
+        text += o.getOrderHistory().get(randNum);
+        text+= " " + outcomes[randStrNum];
+        return text;
+    }
     public void updateNumDraw(){
         numDrawn = o.getPoints()/3;
     }
