@@ -31,7 +31,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         c = new Cooking(ingredients);
         b = new Button("kitchen");
         o = new Order();
-        customer = new Customer(o,"Freddy");
+        customer = new Customer(o,"freddy,lebron,palmer,jonesy,papa,spiderman");
         kitchen = true;
         s = new Screen(true);
         mealDrawn = false;
@@ -61,13 +61,13 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
 
             //draw the boxes where ingredients are placed
             for(Rectangle rec: c.getFoodPlacement()){
-                g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
+                //g.drawRect((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
                 g.drawImage(c.getPlaceFrame(),(int) rec.getX(), (int) rec.getY(),null );
             }
 
             //draw the ingredients
             for (int i = 0; i<ingredients.getIngredientBoxes().length; i++){
-                g.drawRect(ingredients.getCordList()[i*2]+50, ingredients.getCordList()[i*2+1]+30, 0, 0);
+                //g.drawRect(ingredients.getCordList()[i*2]+50, ingredients.getCordList()[i*2+1]+30, 0, 0);
                 g.drawImage(ingredients.getImage(i), ingredients.getCordList()[i*2], ingredients.getCordList()[i*2+1], null);
                 g.drawImage(ingredients.getImage(i), ingredients.getPermanentCordList()[i*2], ingredients.getPermanentCordList()[i*2+1], null);
             }
@@ -87,9 +87,9 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 g.drawRect((int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), (int) c.getCurrMealRec().getWidth(), (int) c.getCurrMealRec().getHeight());
                 g.drawImage(c.getCurrMealImage(), (int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), null);
                 if(o.checkOrder(c.getCurrUserMeal())){
-                    o.checkOrder(c.getCurrUserMeal());
                     c.setCurrUserMeal("");
                     o.generateOrder();
+                    System.out.println(o.getPoints());
                 }
             }
             g.drawRect((int)s.getKnobBox().getX(),(int)s.getKnobBox().getY(), (int) s.getKnobBox().getWidth()-10,(int) s.getKnobBox().getHeight()-10);
@@ -100,12 +100,23 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
 
 
         if(!kitchen){
+            customer.updateNumDraw();
+            customer.limitDraw();
             g.drawImage(s.getScreenImage(),0,0,null);
             p.updateFiles((new File("saves/save1")));
             g.drawRect(p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100);
             g.drawImage(p.getImage(), p.getXPos(), p.getYPos(), p.getImage().getWidth()-100, p.getImage().getHeight()-100, null);
-            if(customer.checkDraw() && customer.getCustomerCount() < 8 && drawCustomerAgain){
-                customer.addCustomerCount();
+            if(customer.checkDraw() && customer.getNumDrawn() < 9 && drawCustomerAgain){
+                for (int i = 0; i< customer.getNumDrawn();i++){
+                    int index = customer.getRandomIndex();
+                    customer.updateIndexList(i,index);
+                }
+            }
+            if(customer.getNumDrawn()>0){
+                for (int index : customer.getUserIndexList()) {
+                    g.drawImage(customer.getCustomerImages()[index], customer.getImageX(index), customer.getImageY(index), null);
+                    g.drawImage(customer.getBubbleImage(), customer.getBubbleX(index), customer.getBubbleY(index),null);
+                }
             }
             drawCustomerAgain = false;
         }
@@ -125,12 +136,10 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 }
             }
             if(s.getKnobBox().contains(clicked)){
-                System.out.println("working");
                 s.changeImage(!kitchen);
                 kitchen = false;
             }
         }
-        System.out.println(kitchen);
 
     }
 

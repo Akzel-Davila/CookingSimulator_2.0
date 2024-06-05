@@ -106,7 +106,7 @@ public class Player {
     public void updateFiles(File f){
         String [] basicInfo = {"x:" + xPos, "y:" + yPos};
         PrintWriter writer = null;
-        FileWriter edit = null;
+        FileWriter edit;
 
         try{
             writer = new PrintWriter(f);
