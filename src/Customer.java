@@ -1,9 +1,9 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Customer {
     private Order o;
@@ -14,8 +14,9 @@ public class Customer {
     private int numDrawn;
     private int customerNum;
     private int[] customerCords;
-    private int[] userIndexList;
+    ArrayList <Integer> userIndexList;
     private int customerCount;
+    private Rectangle [] customerBoxes;
 
     public Customer(Order o, String names) {
         this.o = o;
@@ -23,9 +24,10 @@ public class Customer {
         numDrawn = 0;
         customerNum = customerNames.length;
         customerCords = new int[customerNum*2];
-        userIndexList = new int[customerNum];
+        userIndexList = new ArrayList<>();
         customerImages = new BufferedImage[customerNum];
         imageFileNames = new String[customerNum];
+        customerBoxes = new Rectangle[customerNum];
         customerCount = 0;
         for (int i = 0; i < imageFileNames.length; i++) {
             imageFileNames[i] = "customers/" + customerNames[i] + ".png";
@@ -37,19 +39,24 @@ public class Customer {
             customerCords[h] = randX;
             customerCords[h+1] = randY;
         }
+        int counter = 0;
+        for (int j = 0; j<customerNames.length; j++){
+            customerBoxes[j] = new Rectangle(customerCords[counter], customerCords[counter+1], customerImages[j].getWidth(), customerImages[j].getHeight());
+            counter+=2;
+        }
         bubbleName = "images/bubble.png";
         bubbleImage = readImage();
     }
 
     public boolean checkDraw(){
-        if(o.getPoints() >3 ){
+        if(o.getPoints() >= 3 ){
             return true;
         }
         return false;
     }
     public String getText(){
         String text = "This ";
-        String [] outcomes = {"STINKS", "Is Horrible", "Is Great", "RUlES", "Is mid", "Sucks", "Is okay", "Smells", "Is Raw", "Is Perfect"};
+        String [] outcomes = {"STINKS", "Is Horrible", "Is Great", "RULES", "Is mid", "Sucks", "Is okay", "Smells", "Is Raw", "Is Perfect"};
         int randNum = (int)(Math.random() * o.getOrderHistory().size());
         int randStrNum = (int) (Math.random() * outcomes.length);
         text += o.getOrderHistory().get(randNum);
@@ -79,7 +86,7 @@ public class Customer {
         return 100+(int)(Math.random()*1200);
     }
     public int getRandomY(){
-        return 200+(int)(Math.random()*900);
+        return 300+(int)(Math.random()*650);
     }
     public BufferedImage readImage(int i) {
         try {
@@ -103,24 +110,17 @@ public class Customer {
         }
 
     }
-    public void updateIndexList(int index, int value){
-        userIndexList[index] = value;
-    }
     public void addCustomerCount(){
         customerCount++;
     }
 
-    public int[] getUserIndexList() {
+    public ArrayList<Integer> getUserIndexList() {
         return userIndexList;
     }
     public void limitDraw(){
         if(numDrawn>customerNum){
             numDrawn = customerNum;
         }
-    }
-
-    public void setUserIndexList(int[] userIndexList) {
-        this.userIndexList = userIndexList;
     }
 
     public int getCustomerCount() {
@@ -189,5 +189,13 @@ public class Customer {
 
     public void setBubbleImage(BufferedImage bubbleImage) {
         this.bubbleImage = bubbleImage;
+    }
+
+    public Rectangle[] getCustomerBoxes() {
+        return customerBoxes;
+    }
+
+    public void setCustomerBoxes(Rectangle[] customerBoxes) {
+        this.customerBoxes = customerBoxes;
     }
 }

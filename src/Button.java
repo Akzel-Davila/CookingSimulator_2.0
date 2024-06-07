@@ -9,19 +9,11 @@ public class Button {
     private BufferedImage buttonImage;
     private String imageFileName;
     private boolean pressed;
-    public Button(String screenName){
+    public Button(){
         pressed = false;
-        switch (screenName) {
-            case "kitchen" -> {
-                imageFileName = "images/kitchenButton.jpg";
-                buttonHit = new Rectangle(1100, 800, 150, 150);
-            }
-            case "changingRoom" -> {
-                imageFileName = "images/changingButton.jpg";
-                buttonHit = new Rectangle(300, 100, 400, 400);
-            }
-        }
+        imageFileName = "images/kitchenButton.jpg";
         buttonImage = readImage();
+        buttonHit = new Rectangle(975, 825, buttonImage.getWidth()-200, buttonImage.getHeight()-175);
     }
     public BufferedImage readImage() {
         try {

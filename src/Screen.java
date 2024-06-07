@@ -22,7 +22,7 @@ public class Screen {
         plateImage = readImage();
         imageFileName = "images/doorknob.png";
         doorknobImage = readImage();
-        knobBox = new Rectangle(50,700,doorknobImage.getWidth()-100,doorknobImage.getHeight()-100);
+        knobBox = new Rectangle(50,900,doorknobImage.getWidth(),doorknobImage.getHeight());
     }
     public BufferedImage readImage() {
         try {
@@ -37,7 +37,7 @@ public class Screen {
     }
     public void changeImage(boolean kitchen){
         if(kitchen){
-            imageFileName = "images/dining_room.jpg";
+            imageFileName = "images/kitchen.jpg";
             screenImage = readImage();
         }
         if(!kitchen){

@@ -16,7 +16,6 @@ public class Player {
     public Player(int playerNum, int x, int y) {
         this.imageFileName = "images/player_"+ playerNum + ".jpg";
         this.image = readImage();
-        this.playerBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
         pos = readSaves(new File("saves/save1"));
         System.out.println(Arrays.toString(pos));
         System.out.println(pos.length);
@@ -28,6 +27,7 @@ public class Player {
             this.xPos = x;
             this.yPos = y;
         }
+        this.playerBox = new Rectangle(xPos, yPos, image.getWidth(), image.getHeight());
     }
 
     public Rectangle getPlayerBox() {
@@ -61,6 +61,7 @@ public class Player {
 
     public void setXPos(int xPos) {
         this.xPos = xPos;
+        playerBox = new Rectangle(xPos, yPos, image.getWidth(), image.getHeight());
     }
 
     public int getYPos() {
@@ -69,6 +70,7 @@ public class Player {
 
     public void setYPos(int yPos) {
         this.yPos = yPos;
+        playerBox = new Rectangle(xPos, yPos, image.getWidth(), image.getHeight());
     }
 
     public BufferedImage readImage() {
