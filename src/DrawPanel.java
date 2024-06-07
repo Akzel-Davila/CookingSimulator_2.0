@@ -51,7 +51,7 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
         if(kitchen){
             g.setColor(Color.WHITE);
             g.drawImage(s.getScreenImage(),0,0,null );
-            g.drawImage(s.getPlateImage(), 1100,600,null);
+            g.drawImage(s.getPlateImage(), 1125,600,null);
 
             //Draw receipt and current order
             g.drawImage(o.getReceiptImage(),(int) o.getReceiptBox().getX(),(int)o.getReceiptBox().getY(),null);
