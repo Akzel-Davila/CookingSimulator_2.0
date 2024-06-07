@@ -87,7 +87,6 @@ class DrawPanel extends JPanel implements MouseListener,KeyListener, MouseMotion
                 c.updateCollision();
             }
             if(mealDrawn){
-                g.drawRect((int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), (int) c.getCurrMealRec().getWidth(), (int) c.getCurrMealRec().getHeight());
                 g.drawImage(c.getCurrMealImage(), (int)c.getCurrMealRec().getX(), (int) c.getCurrMealRec().getY(), null);
                 if(o.checkOrder(c.getCurrUserMeal())){
                     c.setCurrUserMeal("");

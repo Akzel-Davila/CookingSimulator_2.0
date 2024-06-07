@@ -122,8 +122,8 @@ public class Cooking {
         return menu.getOrDefault(currUserMeal, " ");
     }
     public void setNewMeal(String mealName){
-        currMealRec = new Rectangle(1300,775, 50,100);
         currMealImage = readImage("images/" + mealName + ".jpg");
+        currMealRec = new Rectangle(1300,775, currMealImage.getWidth(),currMealImage.getHeight());
     }
 
     public BufferedImage getCurrMealImage() {
